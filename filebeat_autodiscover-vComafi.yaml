@@ -11,7 +11,7 @@ spec:
 #    name: kibana
   config:
     output.logstash:
-      hosts: ["https://elasticsearch-es-http.svc.cluster.local:9200"] ## Poner el hostname y puerto de logstash
+      hosts: ["logstash.bue299.comafi.com.ar:5564"] ## Poner el hostname y puerto de logstash
 #      username: "elastic"
 #      password: "arWxZWX0fm79l1Z5z7713Ue6"
     filebeat.autodiscover.providers:
@@ -87,7 +87,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: filebeat
-  namespace: eck-filebeat ## namespace donde se depliega filebeats como daemonset
+  namespace: dev-infra-test ## namespace donde se depliega filebeats como daemonset
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -96,7 +96,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: filebeat
-  namespace: eck-filebeat ## namespace donde se depliega filebeats como daemonset
+  namespace: dev-infra-test ## namespace donde se depliega filebeats como daemonset
 roleRef:
   kind: ClusterRole
   name: filebeat
