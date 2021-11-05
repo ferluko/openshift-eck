@@ -11,7 +11,7 @@ spec:
 #    name: kibana
   config:
     output.logstash:
-      hosts: ["https://elasticsearch-es-http..svc.cluster.local:9200"] ## Poner el hostname y puerto de logstash
+      hosts: ["https://elasticsearch-es-http.svc.cluster.local:9200"] ## Poner el hostname y puerto de logstash
 #      username: "elastic"
 #      password: "arWxZWX0fm79l1Z5z7713Ue6"
     filebeat.autodiscover.providers:
