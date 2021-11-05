@@ -5,13 +5,13 @@ metadata:
 spec:
   type: filebeat
   version: 7.14.1
-  elasticsearchRef:
-    name: elasticsearch
-  kibanaRef:
-    name: kibana
+#  elasticsearchRef:
+#    name: elasticsearch
+#  kibanaRef:
+#    name: kibana
   config:
-#    output.elasticsearch:
-#      hosts: ["https://elasticsearch-es-http..svc.cluster.local:9200"] ## Poner el hostname y puerto de logstash
+    output.logstash:
+      hosts: ["https://elasticsearch-es-http..svc.cluster.local:9200"] ## Poner el hostname y puerto de logstash
 #      username: "elastic"
 #      password: "arWxZWX0fm79l1Z5z7713Ue6"
     filebeat.autodiscover.providers:
@@ -19,7 +19,7 @@ spec:
       type: kubernetes
       hints.default_config.enabled: "false"
       templates:
-      - condition.equals.kubernetes.namespace: log-namespace ## Nombre del projecto de Openshift a loggear
+      - condition.equals.kubernetes.namespace: log-namespace ## Nombre del proyecto de Openshift a loggear
         config:
         - paths: ["/var/log/containers/*${data.kubernetes.container.id}.log"]
           type: container
@@ -87,7 +87,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: filebeat
-  namespace: eck-filebeat ##
+  namespace: eck-filebeat ## namespace donde se depliega filebeats como daemonset
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -96,7 +96,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: filebeat
-  namespace: eck-filebeat ##
+  namespace: eck-filebeat ## namespace donde se depliega filebeats como daemonset
 roleRef:
   kind: ClusterRole
   name: filebeat
